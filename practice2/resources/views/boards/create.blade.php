@@ -4,7 +4,7 @@
 {{-- 아래 html 을 @yield('content') 에 보낸다고 생각하시면 됩니다. --}}
 @section('content')
 
-    <h2 class="mt-4 mb-3">Product Create</h2>
+    <h2 class="mt-4 mb-3">Board Create</h2>
 
     {{-- 유효성 검사에 걸렸을 경우 --}}
     @if ($errors->any())
