@@ -10,7 +10,7 @@
     </a>
 
 
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover" style="font-size: 20px;">
         <colgroup>
             <col width="15%"/>
             <col width="40%"/>
@@ -39,18 +39,24 @@
                 <td>
                     {{$board->user_name}}
                 </td>
-                <td>{{$board->created_at}}</td>
+                <td style="font-size: 15px; vertical-align: middle">{{$board->created_at}}</td>
                 <td>
                     @if($board->user_id == @auth()->user()->id)
-                        <input type="button" value="수정" onclick="location.href='{{route("boards.edit", $board)}}'"/>
-                        <form action="{{route('boards.destroy', $board->id)}}" method="post" style="display:inline-block;">
-                            {{-- delete method와 csrf 처리필요 --}}
-                            @method('delete')
-                            @csrf
-                            <input onclick="return confirm('정말로 삭제하겠습니까?')" type="submit" value="삭제"/></form>
+                        <input type="button" class="btn btn-outline-dark" value="수정"
+                               onclick="location.href='{{route("boards.edit", $board)}}'"/>
+                        <button class="btn btn-outline-dark">
+                            <form action="{{route('boards.destroy', $board->id)}}" method="post"
+                                  style="display:inline-block; height: 9px">
+                                {{-- delete method와 csrf 처리필요 --}}
+                                @method('delete')
+                                @csrf
+                                <input onclick="return confirm('정말로 삭제하겠습니까?')" type="submit" value="삭제"/>
+                            </form>
+                        </button>
+
                     @else
-                        <input type="button" value="수정" onclick="alert('작성자가아닙니다')"/>
-                        <input type="button" value="삭제" onclick="alert('작성자가아닙니다')"/>
+                        <input type="button" class="btn btn-outline-dark" value="수정" onclick="alert('작성자가아닙니다')"/>
+                        <input type="button" class="btn btn-outline-dark" value="삭제" onclick="alert('작성자가아닙니다')"/>
                     @endif
 
                 </td>
