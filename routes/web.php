@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BoardController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,6 +32,11 @@ Route::group(['as' => 'boards', 'prefix' => 'boards', 'middleware' => 'auth'], s
     Route::patch('/{board}', [BoardController::class, 'update'])->name('.update');
 
     Route::delete('/{board}', [BoardController::class, 'destroy'])->name('.destroy');
+});
+
+Route::group(['as'=>'comments', 'prefix' => 'comments', 'middleware'=>'auth'], static function(){
+    Route::post('/store/{board}', [CommentController::class, 'store'])->name('.store');
+    Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('.destroy');
 });
 
 require __DIR__ . '/auth.php';

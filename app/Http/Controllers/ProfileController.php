@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
-use App\Models\board;
+use App\Models\Board;
+use App\Models\Comment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,11 +35,16 @@ class ProfileController extends Controller
         }
 
         $user = $request->user();
-        $boards = Board::where('user_id', $user->id)->get();
 
+        $boards = Board::where('user_id', $user->id)->get();
         foreach ($boards as $board) {
             $board->user_name = $user->name;
             $board->save();
+        }
+        $comments = Comment::where('user_id', $user->id)->get();
+        foreach ($comments as $comment) {
+            $comment->user_name = $user->name;
+            $comment->save();
         }
 
         $request->user()->save();
@@ -56,10 +62,14 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
-        $boards = Board::where('user_id', $user->id)->get();
 
+        $boards = Board::where('user_id', $user->id)->get();
         foreach ($boards as $board) {
             $board->delete();
+        }
+        $comments = Comment::where('user_id', $user->id)->get();
+        foreach ($comments as $comment) {
+            $comment->delete();
         }
 
         Auth::logout();

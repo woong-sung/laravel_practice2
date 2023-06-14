@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBoardRequest;
 use Illuminate\Http\Request;
 use App\Models\Board;
+use App\Models\Comment;
 
 class BoardController extends Controller
 {
@@ -41,15 +42,15 @@ class BoardController extends Controller
         $this->board['content'] = $validated['content'];
         $this->board->save();
 
-//        $this->board->create($request);
         return redirect()->route('boards.index');
     }
 
     // 상세 페이지
     public function show(Board $board)
     {
+        $comments = Comment::where('board_id', $board->id)->get();
         // show 에 경우는 해당 페이지의 모델 값이 파라미터로 넘어옵니다.
-        return view('boards.detail-page', compact('board'));
+        return view('boards.detail-page', compact('board', 'comments'));
     }
 
     public function edit(Board $board)
