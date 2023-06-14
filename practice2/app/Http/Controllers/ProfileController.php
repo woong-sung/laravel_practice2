@@ -56,6 +56,11 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+        $boards = Board::where('user_id', $user->id)->get();
+
+        foreach ($boards as $board) {
+            $board->delete();
+        }
 
         Auth::logout();
 
