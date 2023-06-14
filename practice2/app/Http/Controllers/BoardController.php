@@ -49,7 +49,7 @@ class BoardController extends Controller
     public function show(Board $board)
     {
         // show 에 경우는 해당 페이지의 모델 값이 파라미터로 넘어옵니다.
-        return view('boards.show', compact('board'));
+        return view('boards.detail-page', compact('board'));
     }
 
     public function edit(Board $board)

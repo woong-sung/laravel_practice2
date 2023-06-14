@@ -41,13 +41,18 @@
                 </td>
                 <td>{{$board->created_at}}</td>
                 <td>
-                    <input type="button" value="수정" onclick="location.href='{{route("boards.edit", $board)}}'"/>
+                    @if($board->user_id == @auth()->user()->id)
+                        <input type="button" value="수정" onclick="location.href='{{route("boards.edit", $board)}}'"/>
+                        <form action="{{route('boards.destroy', $board->id)}}" method="post" style="display:inline-block;">
+                            {{-- delete method와 csrf 처리필요 --}}
+                            @method('delete')
+                            @csrf
+                            <input onclick="return confirm('정말로 삭제하겠습니까?')" type="submit" value="삭제"/></form>
+                    @else
+                        <input type="button" value="수정" onclick="alert('작성자가아닙니다')"/>
+                        <input type="button" value="삭제" onclick="alert('작성자가아닙니다')"/>
+                    @endif
 
-                    <form action="{{route('boards.destroy', $board->id)}}" method="post" style="display:inline-block;">
-                        {{-- delete method와 csrf 처리필요 --}}
-                        @method('delete')
-                        @csrf
-                        <input onclick="return confirm('정말로 삭제하겠습니까?')" type="submit" value="삭제"/></form>
                 </td>
             </tr>
         @endforeach
