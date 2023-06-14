@@ -16,4 +16,5 @@ class board extends Model
     protected $fillable = [
         'title', 'content', 'user_id', 'user_name'
     ];
+
 }
